@@ -1,6 +1,8 @@
 # Suscribe
 This Simple Chat App is a fullstack app that am still working on.
 
+![Preview](https://chuksjohnleo.github.io/images/chatapp.png)
+
 ## Starting this app
 
 To start this app on your local machine;
