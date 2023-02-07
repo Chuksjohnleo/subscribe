@@ -1,0 +1,76 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.btn:active{
+    background-color: white;
+}
+@media (hover:hover){
+    .btn:hover{
+       color: blue;
+       }
+}
+#users{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.user{
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+   
+}
+
+.pics-container{
+ display: flex;
+ justify-content: center;
+}
+.profilepics{
+    margin-bottom: 5px;
+    border-radius: 12px;
+    border: 2px double aqua;
+}
+.user-detail{
+    display: inline-block;
+    border: 1px solid aqua;
+    padding: 1.1rem 1.5rem;
+    margin: 0 1.2rem;
+    width:70vw ;
+    word-wrap: break-word;
+}
+.add-btn{
+    font-weight: bold;
+    border: 0;
+    background-color: aqua;
+    padding: 1.1rem 1.5rem;
+    margin: 0 2rem;
+    width: 170px;
+}
+
+.user-p{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.add-btn-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.add-btn:active{
+    background-color: white;
+}
+
+@media screen and (min-width:600px){
+   .user{
+    font-size: 3rem;
+   }
+}

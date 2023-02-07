@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created by chuksjohnleo" />
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/profile.css" />
+    <title>Profile | Subscribe</title>
+  </head>
+  <body style="display: none;" id="body">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <nav>
+      <div><button class="link" onclick="back()">← Back to home</button></div>
+    </nav>
+    <h1>Profile</h1>
+    <div class="dark">
+      <div class="conf-con">
+      <div id="confirm">
+        <p>
+          <strong
+            >Are sure you want to update your
+            <span id="detail">details</span>?</strong
+          >
+        </p>
+        <div>
+          <label class="bold block" for="password"
+            >Put your password to continue</label
+          >
+          <input type="password" class="bold data" id="password" disabled />
+          <div><span class="bold" onclick="showpass2()">Show password<span></div>
+          <div id="guide" class="bold"></div>
+        </div>
+        <p><span id="spinner" class="spinner"></span></p>
+        <p class="c-btns">
+          <button onclick="location.reload()" class="btn">cancel</button
+          ><button class="btn" onclick="pEdit()">Update</button>
+        </p>
+      </div>
+      </div>
+    </div>
+    <div id="root">
+      <!-- profile pics -->
+      <div class="photo" id="photo">
+        <div class="image-or-initial">
+          <img id="profilePicture" alt="profile picture">
+          <span id="photoSpan"></span>
+        </div>
+         <div class="upload-handlers">
+            <div><button onclick="choosePics()" class="btn">Change picture</button></div>
+            <div id="uploadsContainer" style="color: black;">
+              <label class="btn space" style="color: black;">Choose file<input class="input choose-profile-pics" id="picsFile" type="file" accept="image/*" ></label>
+              <span class="bold space" id="filename"></span>
+              <button onclick="upload()" id="uploadBtn" class="btn">Upload</button>
+              <div style="color: black;">Choose a file and click upload to save</div>
+            </div>
+         </div>
+      </div>
+      <!-- <div><button onclick="choosePics()">Profile pics</button></div>
+      <div id="uploadsContainer"><input id="picsFile" type="file" accept="image/*" ><button onclick="upload()" id="uploadBtn">Upload</button></div>
+       -->
+      <!-- profile pics end -->
+      <section class="section1" id="section1">
+        <div class="container">
+          <h1 class="profile">Profile details</h1>
+          <!-- <p class="data-container"></p> -->
+          <p>
+            <label for="joined" class="bold">Registration date</label
+            ><input
+              type="text"
+              class="input bold data"
+              name="datum"
+              id="joined"
+              disabled
+            />
+          </p>
+          <p>
+            <label for="username" class="bold">Username</label
+            ><input
+              type="text"
+              class="input bold data"
+              name="datum"
+              id="username"
+              disabled
+            />
+          </p>
+          <p>
+            <label for="fname" class="bold">First Name</label
+            ><input
+              type="text"
+              class="input bold data"
+              name="datum"
+              id="fname"
+              disabled
+            />
+          </p>
+          <p>
+            <label for="lname" class="bold">Last Name</label
+            ><input
+              type="text"
+              class="input bold data"
+              name="datum"
+              id="lname"
+              disabled
+            />
+          </p>
+          <!-- start -->
+          
+          <div class="edit-btns">
+            <button id="edit" onclick="enable()" class="block btn">
+              Edit Profile</button
+            ><button
+              onclick="location.reload()"
+              id="cancel"
+              style="background-color: white; display: none"
+              class="block btn"
+            >
+              Cancel</button
+            ><button
+              id="save"
+              style="background-color: white; display: none"
+              class="block btn"
+              onclick="reconfirm()"
+            >
+              Save
+            </button>
+          </div>
+          <!-- end -->
+          <h2 class="profile">Login details</h2>
+          <p>
+            <label for="email" class="bold">Email</label
+            ><input
+              type="email"
+              class="input bold data"
+              name="datum"
+              id="email"
+              disabled
+            />
+            <button class="space btn"
+             id="emailEnabler"
+            >Change</button>
+            <button
+            id="cancelEnabler"
+             class="space btn"
+           >Cancel</button>
+            <button
+            id="emailChange"
+             class="space btn"
+           >Save</button>
+          </p>
+          <p>
+            <label for="passwordf" class="bold">Password</label>
+            <input type="password" class="input bold data" id="passwordf" disabled />
+            <button
+            id="passChange"
+             class="space btn"
+           >Change</button>
+          </p>
+          <div>
+            <p id="result"></p>
+            <p><span id="spinner" class="spinner"></span></p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <footer style="text-align: center; border-top: 2px solid grey">
+      <p>
+        Website by
+        <a
+          style="text-decoration: none; color: blue"
+          href="https://chuksjohnleo.github.io"
+          >Chuksjohnleo</a
+        >
+      </p>
+      <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
+    </footer>
+    <script src="/profile.js"></script>
+  </body>
+</html>

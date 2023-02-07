@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Web App</title>
+  </head>
+  <body>
+    <div id="messages">kk</div>
+  <script>
+    const WebSocket = require('ws');
+    const socket = new WebSocket("ws://localhost:3000");
+    const messages = document.getElementById("messages");
+
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+
+    socket.onmessage = (event) => {
+      const message = event.data;
+      messages.innerHTML += <p>${message}</p>;
+    };
+
+    socket.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+  </script>
+  </body>
+</html>

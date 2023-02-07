@@ -1,0 +1,350 @@
+body {
+    margin: 0;
+    padding-bottom: 3rem;
+    font-family:BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif;
+      background-color:aqua;
+
+  }
+
+.white{
+  background-color: white;
+}
+
+#friendslist{
+  position: absolute;
+  background-color: aqua;
+  width: 100%;
+  z-index: 99;
+}
+
+/* #friendslist::-webkit-scrollbar{
+  display: none;
+} */
+
+nav{   
+    flex-direction: column;
+    padding: 2px;
+}
+.chat-h1{
+  display: none;
+  margin: 0px auto;
+}
+.h-100{
+  min-height: 120px; 
+}
+#sec-nav{
+  display: flex;
+  flex-direction: column;
+  padding:0 1rem 1rem 1rem;
+}
+
+#typer{
+  text-align: right;
+}
+
+#friend-name{
+  font-weight: 500;
+  max-width: 150px;
+  word-wrap: break-word;
+}
+/* @media (min-width:500px){
+  #friend-name{
+    max-width: 450px;
+  }
+} */
+
+#i-cont{
+    display: flex;
+   
+  }
+
+  #form {
+    background:white;
+    padding: 0.25rem;
+    position: fixed;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 4rem;
+    max-height: 8rem;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    border: 2px solid white;
+    border-radius: 25px;
+    box-shadow: 2px -2px 3px 3px inset aqua;
+  }
+  #message {
+    border: none;
+    padding: 1.2rem;
+    border-radius: 2rem 0rem 0rem 2rem;
+    margin: 0.5rem ;
+    width: 60%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 1px double blue;
+    word-wrap: break-word;
+  }
+   #message:focus {
+    outline: none;
+  } 
+  #form-btn {
+    background:aqua;
+    border: none;
+    padding: 0 0.5rem;
+    margin: 0.5rem 0.5rem 0.5rem 0rem;
+    border-radius: 0rem 2rem 2rem 0rem;
+    outline: none;
+    color: black;
+    font-weight: 900;
+  }
+
+  #messages {
+    margin-bottom: 100px;
+    padding: 0 1.5rem;
+    position: static;
+    overflow-y: hidden;
+    overflow-x: hidden;
+  }
+  #message.message-p{
+    position: static;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 1.1rem;
+    word-wrap: break-word;
+    max-width: 80vw;
+  }
+  
+  .daylist{
+    clear: both;
+    background-color:rgb(228, 208, 208);
+    padding: 0.5rem 0rem;
+    text-align: center;
+    margin: 30px 10px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    transform: translateY(20px);
+  }
+  .received{
+    float: left;
+    clear:both;
+    text-align: left;
+    background-color: aqua;
+    margin:6px 20% 6px 12px;
+    padding: 0.5rem 1rem 0.5rem 0.3rem;
+    border-radius: 5px;
+  }
+  .sent{
+    float: right;
+    clear: both;
+    text-align: right;
+    background-color: rgb(0, 0, 255,0.6);
+    color: white;
+    margin:6px 12px 6px 20%;
+    padding: 0.5rem 0.3rem 0.5rem 1rem;
+    border-radius: 5px;
+  }
+.nspan{
+  text-align:left;
+  display:inline-block;
+   word-wrap: break-word;
+   max-width: 60vw;
+}
+#message::-webkit-scrollbar{
+  width: 10px;
+  border-radius: 5px;
+}
+#message::-webkit-scrollbar-thumb{
+  background-color: blue;
+  border-radius: 5px;
+}
+#message::-webkit-scrollbar-track{
+  background-color: aqua;
+}
+
+  #tobottom{
+   text-align: center;
+   font-weight: 900;
+  }
+  .background{
+    background-color: white;
+  }
+  .aqua{
+    background-color: aqua;
+  }
+  .sent-status{
+    display: inline-block;
+    font-size:0.85rem;
+    font-weight:500;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    padding: 0px 5px;
+    text-align: center;
+    box-shadow: 2px 2px 2px black;
+    transform: translate(30%,70%);
+  }
+  .sent-status-r{
+    display: block;
+    font-size:0.85rem;
+    font-weight:500;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    width: 70px;
+    text-align: center;
+    padding: 0px 5px;
+    box-shadow: 2px 2px 2px black;
+    transform: translate(-30px,70%);
+  }
+  .form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #users{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 4px 1rem;
+}
+.user{
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+   
+}
+
+.user-detail{
+    display: inline-block;
+    border: 1px solid aqua;
+    padding: 1.1rem 1.5rem;
+    margin: 0 1rem;
+    width:70vw ;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.user-p{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.user-p:active{
+  background-color: aqua;
+}
+
+
+.user-p:hover{
+  background-color: aqua;
+  color: blue;
+}
+
+.guides-wrapper{
+  display: flex;
+  justify-content: center;
+}
+.guides{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.none-friends{
+  display: none;
+}
+
+#chat-btn,#change-bg,#back-btn,#back-btn1{
+  background-color: white;
+}
+
+#emojis{
+  height: 100px;
+  width: 70%;
+  background-color: white;
+  overflow-y: scroll;
+  position: absolute;
+  bottom: 120%;
+  left: 2%;
+  padding: 15px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px yellow inset;
+  z-index: 999;
+}
+
+.emoji{
+  margin: 4px;
+  border: 0px;
+}
+
+#emojibtn{
+  background:aqua;
+  border: none;
+  padding: 0 0.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 0rem;
+  outline: none;
+  color: black;
+  font-weight: 900;
+  border-radius:2rem 2rem 2rem 2rem;
+}
+
+#emojibtn:active{
+  background-color: rgb(35, 158, 158);
+}
+
+@media screen and (min-width:800px){
+
+#friendslist{
+  position: fixed;
+  background-color: aqua;
+  width: 50%;
+  z-index: 9;
+  top: 120px;
+  bottom: 0;
+  overflow-y: scroll;
+  height: calc(100%-122px);
+}
+
+#chat-proper{
+  position: fixed;
+  width: 50%;
+  left: 50%;
+  z-index: 9;
+  top: 120px;
+  bottom: 0;
+  overflow-y: scroll;
+  height: calc(100%-200px);
+}
+#form{
+  left: 50%;
+  right: 20px;
+  bottom: 20px;
+}
+.user-detail{
+  width: 80%;
+  padding: 1.1rem 1rem;
+  margin: 0 0.7rem;
+}
+.none-friends{
+  display: block;
+}
+
+#messages > li{
+  max-width: 25vw;
+}
+.nspan{
+  max-width: 24.5vw;
+}
+.daylist{
+  width: 90%;
+}
+}
+

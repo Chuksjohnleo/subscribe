@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created by chuksjohnleo" />
+    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="app.css" />
+    <title>Registration | Subscribe</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/"> <button class="btn">Back</button> </a>
+    </nav>
+    <h1>Subscribe</h1>
+    <div id="root">
+      <div class="wrapper">
+        <div class="form" id="form">
+          <h2 class="i2">Register</h2>
+          <!-- <form  class="form" id="form" onsubmit="submit()" method="get"> -->
+          <input class="input" id="username" type="text" name="registerUsername" placeholder="Username" required />
+          <input class="input" id="fname" type="text" name="registerFname" placeholder="First Name" required />
+          <input class="input" id="lname" type="text" name="registerLname" placeholder="Surname/Last Name" required />
+          <input class="input" id="email" type="email" name="registerEmail" placeholder="email" autocomplete="off" required />
+          <input
+          class="input"
+            id="password"
+            type="password"
+            name="registerPassword"
+            placeholder="password"
+            autocomplete="off"
+            required
+          />
+          <label id="visibilityLabel" class="pointer"><span id="visibilityText" class="bold">Show password</span><input id="visibility" type="checkbox"></label>
+          <!-- <button id="te">test</button> -->
+          <!-- <input type="submit" value="submit"> -->
+          <div><span  id="result" style='background:white;color:red;font-weight:800;'></span></div>
+          <p><span id="spinner" class="spinner"></span></p>
+          <button id="submitBtn" class="btn" onclick="submit()" name="register">Register</button>
+          <!-- <input id="submitBtn" class="btn" type="submit" value="submit"> -->
+          <p class="bold">Registered?  <a href="/login"> Login </a></p>
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+    <footer style="position: sticky;bottom: 0px;transform: translateY(50vh); text-align: center;border-top: 2px solid grey;">
+      <p>Website by <a style="text-decoration: none;color: blue;" href="https://chuksjohnleo.github.io">Chuksjohnleo</a></p>
+      <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
+    </footer>
+    <script src="register.js"></script>
+  </body>
+</html>

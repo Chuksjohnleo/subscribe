@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created by chuksjohnleo" />
+    <link rel="stylesheet" type="text/css" href="/app.css" />
+    <link rel="stylesheet" type="text/css" href="/chat.css" />
+    <title>Chats | Subscribe</title>
+  </head>
+  <body id="body">
+    <nav>
+      <div id="i-cont">
+        <h1 class="chat-h1">Chats</h1>
+        <button id="back-btn1" onclick="history.back()" class="link no-space">
+          ← Back
+        </button>
+        <button id="back-btn" onclick="addFriendslist()" class="link no-space">
+          ← Back
+        </button>
+        <button
+          id="change-bg"
+          onclick="changeBackground()"
+          class="btn no-space"
+        >
+          Change background
+        </button>
+      </div>
+
+      <div id="sec-nav">
+        <div id="friend-name"></div>
+        <div id="typer"></div>
+      </div>
+    </nav>
+    <!-- <div class="all"> -->
+      <div id="friendslist">
+
+        <h2 class="i2">Friends</h2>
+        <p style="text-align: center; font-weight: 700">
+          Select a friend to Chat
+        </p>
+        <section id="users"></section>
+        <div class="guides-wrapper">
+          <div class="guides">
+            <p id="result"></p>
+            <p><span id="spinner" class="spinner"></span></p>
+          </div>
+        </div>
+      </div>
+      <div id="chat-proper" style="display: none">
+        <p id="time"></p>
+        <section><article id="messages"></article></section>
+        <p id="tobottom"></p>
+        <div class="form-container">
+          <div id="form" class="chat-form">
+            <div id="emojis" style="display: none;z-index: 999;"></div>
+            <button id="emojibtn">🙂</button>
+            <p id="message" oninput="typist()" placeholder="write your message" contenteditable="true"></p>
+            <button
+              id="form-btn"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/chat.js">
+      //const socket = io.connect('http://localhost:3001');
+    </script>
+  </body>
+</html>

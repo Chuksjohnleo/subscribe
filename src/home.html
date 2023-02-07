@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created by chuksjohnleo" />
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <title>Home | Subscribe</title>
+  </head>
+  <body style="display: none;" id="body">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <nav>
+      <div><a class="link" href="/login">Log out</a><a id="chats" class="link" >Chats</a><a id="profileLink" class="link">Profile</a></div>
+    </nav>
+    <h1>Home | Welcome</h1>
+    <div id="root">
+      <section>
+        <div class="container">
+          <h1>Data Confirmation</h1>
+          <div>
+            <p>
+              <strong>
+                Subscribe is so delighted to have you here.
+                Feel to Chat the developer of this app through the chat section.
+                His email is usually the first to appear in the friends list.
+                Thank you, enjoy yourself 😉.
+              </strong>
+            </p>
+            <strong>Click the button below to add new chatmates</strong>
+          </div>
+          <div>
+            <p id="result"></p>
+            <p><span id="spinner" class="spinner"></span></p>
+            <p style="display: none;">
+              <button
+                id="confirmBtn"
+                class="confirm btn"
+              >
+                Confirm your data
+              </button>
+            </p>
+            <p><button
+              onclick="getUsers()"
+              id="getusersbtn"
+              class="confirm btn"
+            >
+              Get users
+            </button></p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <section id="users">
+    </section>
+    <footer
+      style="
+        position: sticky;
+        bottom: 0px;
+        transform: translateY(30vh);
+        text-align: center;
+        border-top: 2px solid grey;
+      "
+    >
+      <p>
+        Website by
+        <a
+          style="text-decoration: none; color: blue"
+          href="https://chuksjohnleo.github.io"
+          >Chuksjohnleo</a
+        >
+      </p>
+      <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
+    </footer>
+    <script>
+      // function test(){
+      //   fetch('/user',{
+      //     method: 'post',
+      //     headers: {authorization: sessionStorage.getItem('token')}
+      //   });
+      // }
+      // test()
+    </script>
+    <script src="/home.js"></script>
+  </body>
+</html>

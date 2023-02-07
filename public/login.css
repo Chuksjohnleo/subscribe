@@ -1,0 +1,29 @@
+.wrapper{
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    transform: translateY(0%); 
+    box-shadow: 2px 2px 15px 4px black;
+    padding: 5%;
+    border-radius: 10px;
+    width: 500px;
+    z-index: 0;
+}
+@media screen and (min-width:505px){
+    .wrapper{
+    width: 500px;
+    }
+}
+
+h1{
+    text-align: center;
+}
+.btn:active{
+    background-color: blue;
+    color: white;
+}
+@media (hover:hover){
+    .btn:hover{
+       color: blue;
+       }
+}
