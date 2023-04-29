@@ -10,34 +10,42 @@
     <link rel="stylesheet" href="app.css" />
     <title>Registration | Subscribe</title>
   </head>
-  <body>
-    <nav>
-      <a href="/"> <button class="btn">Back</button> </a>
+  <body class="bg">
+    <nav  class="bg">
+      <div><a class="link" href="/">  ← Back </a></div>
+      <div style="display: flex;"><span style="display: inline-block;margin: 15px 0;" id="color-name">Aqua</span><div class="bg-slide"><span  id="slider" class="slider"></span></div></div>
     </nav>
     <h1>Subscribe</h1>
-    <div id="root">
-      <div class="wrapper">
+    <div id="root" class="bg">
+      <div class="wrapper bg">
         <div class="form" id="form">
           <h2 class="i2">Register</h2>
           <!-- <form  class="form" id="form" onsubmit="submit()" method="get"> -->
-          <input class="input" id="username" type="text" name="registerUsername" placeholder="Username" required />
+          <input class="input" id="username" type="text" name="registerUsername" placeholder="Username"  autocomplete="new-password" required />
           <input class="input" id="fname" type="text" name="registerFname" placeholder="First Name" required />
           <input class="input" id="lname" type="text" name="registerLname" placeholder="Surname/Last Name" required />
-          <input class="input" id="email" type="email" name="registerEmail" placeholder="email" autocomplete="off" required />
+          <input class="input" id="email" type="email" name="registerEmail" placeholder="email"  autocomplete="off" required />
+          <strong>Gender</strong>
+          <div>
+            <input class="input-radio" id="male-gender" type="radio" name="registergender" value="male" autocomplete="off" required />
+            Male
+            <input class="input-radio" id="female-gender" type="radio" name="registergender" value="female" autocomplete="off" required />
+            Female
+          </div>
           <input
           class="input"
             id="password"
             type="password"
             name="registerPassword"
             placeholder="password"
-            autocomplete="off"
+            autocomplete="new-password"
             required
           />
           <label id="visibilityLabel" class="pointer"><span id="visibilityText" class="bold">Show password</span><input id="visibility" type="checkbox"></label>
           <!-- <button id="te">test</button> -->
           <!-- <input type="submit" value="submit"> -->
-          <div><span  id="result" style='background:white;color:red;font-weight:800;'></span></div>
-          <p><span id="spinner" class="spinner"></span></p>
+          <div style="text-align: center;"><span  id="result" style='background:white;color:red;font-weight:800;text-align: center;'></span></div>
+          <div><span id="spinner" class="spinner"></span></div>
           <button id="submitBtn" class="btn" onclick="submit()" name="register">Register</button>
           <!-- <input id="submitBtn" class="btn" type="submit" value="submit"> -->
           <p class="bold">Registered?  <a href="/login"> Login </a></p>
@@ -45,7 +53,7 @@
         <!-- </form> -->
       </div>
     </div>
-    <footer style="position: sticky;bottom: 0px;transform: translateY(50vh); text-align: center;border-top: 2px solid grey;">
+    <footer style="position: sticky;bottom: 0px;transform: translateY(20vh); text-align: center;border-top: 2px solid grey;">
       <p>Website by <a style="text-decoration: none;color: blue;" href="https://chuksjohnleo.github.io">Chuksjohnleo</a></p>
       <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
     </footer>

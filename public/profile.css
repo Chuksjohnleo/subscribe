@@ -27,7 +27,7 @@ input:disabled,input:enabled{
 .photo{
     height:50% ;
     width: 50%;
-    background-color: white;
+   
     border-radius: 15px;
     justify-self: center;
     text-align: center;
@@ -51,6 +51,11 @@ input:disabled,input:enabled{
     flex-direction: column;
     overflow-x: visible;
 }
+#filename{
+    max-width: 210px;
+   
+    word-wrap: break-word;
+}
 @media screen and (min-width:501px){
     .photo{
         width: 100%;
@@ -63,6 +68,8 @@ input:disabled,input:enabled{
     max-height: 300px;
     border-radius: 12px;
     box-shadow: 2px 2px 12px white;
+    clip-path: circle(50%);
+    border: 2px inset aqua;
 }
 #photoSpan{
     position: relative;
@@ -150,4 +157,11 @@ input:disabled,input:enabled{
     border-right:4px solid black;
     border-radius: 50px;
     animation: spinner 0.7s linear 0s infinite;
+}
+
+@media screen and (max-width:230px){
+    .link{
+        font-weight: 300;
+        margin:5px 0%;
+    }
 }

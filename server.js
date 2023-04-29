@@ -13,7 +13,7 @@ const Login = require('./Controllers/login');
 const Profile = require('./Controllers/profile');
 const EmailChange = require('./Controllers/emailChange');
 const Chats = require('./Controllers/chat');
-const uri = 'connection string'
+const uri = process.env.DATABASE_URI;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,16 +28,21 @@ async function run() {
     const collection = db.collection('login');
     const collection2 = db.collection('users');
     const collection3 = db.collection('chats');
-    // Find the first document in the collection
-  //  const second = await collection2.deleteMany({})
-  //   const first = await collection.deleteMany({}) 
-   // const third = await collection3.deleteMany({}) 
-    const second2 = await collection2.find().toArray();
-  //   const first2 = await collection.find().toArray(); //It must be converted to array of objects
-  const first3 = await collection3.find().toArray();
+    const counter = db.collection('counter');
 
-     console.log(third,second2);
-   // console.log(first,second,third)
+    //Find the first document in the collection
+    
+    // const first = await collection.deleteMany({ }) 
+    // const second = await collection2.deleteMany({ })
+    // const third = await collection3.deleteMany({}) 
+    // const fourth = await counter.deleteMany({ }) 
+
+    const first = await collection.find().toArray();
+    const second = await collection2.find().toArray(); //It must be converted to array of objects
+    const third = await collection3.find().toArray();
+    const fourth = await counter.find().toArray();
+   // console.log(third)
+     console.log(first,second,third,'counter here',fourth);
   } finally {
     // Close the database connection when finished or an error occurs
     await client.close();
@@ -100,6 +105,9 @@ app.get("/login", (req, res) => {
     res.sendFile("/login.html", public);
 });
 
+app.get("/verify-your-email", (req, res) => {
+  res.sendFile("/verify.html", public);
+});
 
 app.get("/:user",(req, res) => {
   res.sendFile('/home.html',public);
@@ -117,7 +125,7 @@ app.post("/reset",authenticate, (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  if (req.body.email !== '' && !req.body.email.includes(' ') && req.body.email !== null &&  req.body.password !== '' &&  req.body.password !== null && req.body.fname !== '' && req.body.fname !== null && req.body.lname !== '' && req.body.lname !== null) {
+  if (req.body.email.includes('@') && req.body.email !== '' && !req.body.email.includes(' ') && req.body.email !== null &&  req.body.password !== '' &&  req.body.password !== null && req.body.fname !== '' && req.body.fname !== null && req.body.lname !== '' && req.body.lname !== null) {
     Register.register(res,req.body,jwt,MongoClient,uri)
     .catch(()=>{
       res.json('An error occurred please retry')
@@ -127,16 +135,23 @@ app.post("/register", (req, res) => {
   }
 });
 
-app.post('/confirm-data',authenticate, (req,res)=>{
+app.post('/v/confirm-data',authenticate, (req,res)=>{
   //if(req.user.email === req.body.email){
-    Email.sendEmail(req,res,req.user.email);
+    Email.sendEmail(req,res,jwt).catch(e=>{
+      console.log(e,'In Email.sendEmail')
+    });
   //}
 });
 
 app.post('/:user/user-session',authenticate, (req,res)=>{
   let user = req.params.user;
   if(user === req.user.username){
-    res.json({message:'session is still on',email: req.user.email,user:req.user.username});
+    res.json({
+              message:'session is still on',
+              email: req.user.email,
+              user:req.user.username,
+              profilePicture: req.user.profilePicture
+            });
     return;
   }
   res.json({error: 'Invalid token'});
@@ -168,7 +183,8 @@ app.get('/:user/profile',(req,res)=>{
 
 app.post("/upload-profile-pics",authenticate,upload.single('pics'),(req,res)=>{
   function deleter(file){
-    fs.unlinkSync(__dirname + `/uploads/${file}`)
+    if(!fs.existsSync(`./uploads/${file}`))return;
+    fs.unlinkSync(__dirname + `/uploads/${file}`);
   }
   Profile.profilePicture(req,res,MongoClient,uri,jwt,deleter);
 });
@@ -180,8 +196,11 @@ app.get("/profile/upload-profile-pics/:token",(req,res)=>{
     const token = req.params.token;
     // if the token is valid, set the user object in the request
     req.user = jwt.verify(token, 'secretkey');
-   if(req.user.profilePicture) res.sendFile(`/${req.user.profilePicture}`,{root:'uploads'});
-   else res.json('not uploaded')
+  
+   if(!fs.existsSync(`./uploads/${req.user.profilePicture}`))return res.sendFile(`/logo.svg`,{root:'public'});
+   if(req.user.profilePicture && fs.existsSync(`./uploads/${req.user.profilePicture}`) ) res.sendFile(`/${req.user.profilePicture}`,{root:'uploads'});
+   else res.sendFile(`/logo.svg`,{root:'public'});
+   console.log(fs.existsSync(`./uploads/${req.user.profilePicture}`))
   } catch (error) {
     // if the token is invalid, return an error
     return res.send({ error: 'Invalid token' });
@@ -189,18 +208,13 @@ app.get("/profile/upload-profile-pics/:token",(req,res)=>{
 });
 
 app.get("/profile/get-profile-pics/:user",(req,res)=>{
- 
-  // check if the token is valid
   try {
-    const user = req.params.user;
-    // if the token is valid, set the user object in the request
-   if(user !== 'undefined') res.sendFile(`/${user}`,{root:'uploads'});
+   const user = req.params.user;
+   if(user !== 'undefined' && fs.existsSync(`./uploads/${user}`)) res.sendFile(`/${user}`,{root:'uploads'});
    else res.sendFile(`/logo.svg`,{root:'public'});
   } catch (error) {
-    console.log(error,'chai')
-    // if the token is invalid, return an error
-    return res.sendFile(`/favicon.jpg`,{root:'public'});
-    //res.send({ error: 'Invalid token' });
+    console.log('yes p error')
+    return res.sendFile(`/logo.svg`,{root:'public'});
   }
 })
 
@@ -229,6 +243,30 @@ app.post('/:user/chats',authenticate,(req,res)=>{
   })
 });
 
+app.get('/s/recover-pass',(req,res)=>{
+  res.sendFile('/recoverpass.html',public)
+});
+
+app.post('/r/recover-pass/confirm-e',(req,res)=>{
+  EmailChange.recoverPassword(req,res,jwt).catch(e=>{
+    res.json({error:'<p class="bold">An error occured <button class="btn block" onclick="location.reload()">Please retry</button><p>'})
+    console.log(e)
+  });
+});
+
+app.post('/r/recover-pass/change-p',(req,res)=>{
+  try{
+      let token = req.header('Authorization')
+      req.user = jwt.verify(token, 'secretkeyp');
+      EmailChange.saveNewPass(req,res,MongoClient,uri,req.body.email).catch(e=>{
+        res.json({error:'<p class="bold">An error occured <button class="btn block" onclick="location.reload()">Please retry</button><p>'})
+        console.log(e)
+      });
+  }catch(e){
+    console.log(e)
+    res.json('error');
+  }
+});
 
 app.get('/user/authe',(req,res)=>{
   const q = url.parse(req.url, true);
@@ -236,7 +274,7 @@ app.get('/user/authe',(req,res)=>{
   const vstring = q.query.v;
  try{
      req.user = jwt.verify(token, 'secretkeye')
-     EmailChange.verify(q.query.e,q.query.n,res,req.user.string,vstring,MongoClient,uri).catch(err=>{
+     EmailChange.verify(q.query.e,q.query.n,res,req,vstring,MongoClient,uri).catch(err=>{
   console.log(err)
   });
 }
@@ -245,9 +283,8 @@ catch(err){
  }
 });
 
-// let u = 'http://localhost:4001/user/authe?t=a&b=cccg';
-// var qt = url.parse(u, true);
-// console.log(qt);
+
+
 //chuksjohnleo.github.io@gmail.com
 //nwanonenyileonard@gmail.com
 
@@ -274,13 +311,6 @@ io.on('connection', socket => {
 
     // When a user initiates a private chat, send the message to only the two users involved
     socket.on('private message', async data => {
-        if (connectedUsers[data.to]) {
-            connectedUsers[data.to].emit('private message', data);
-        }
-        if (connectedUsers[data.from]) {
-            
-            connectedUsers[data.from].emit('private message', data);
-        }
        try{ 
         let newMessage =  {
           sender: data.from,
@@ -297,10 +327,14 @@ io.on('connection', socket => {
           pinned:false,
         }
         function status(){
-           if(connectedUsers[data.from] !== undefined){
+          console.log('yea')
+           if(connectedUsers[data.from]){
+            console.log('yea2')
           connectedUsers[data.from].emit('status1', data);
          }
-         if (connectedUsers[data.to] !== undefined) {
+         if (connectedUsers[data.to]) {  
+          console.log('yea3')
+            connectedUsers[data.to].emit('private message', data);
           if(connectedUsers[data.from]){
             connectedUsers[data.from].emit('status2', data);
            };
@@ -321,8 +355,10 @@ io.on('connection', socket => {
        }
     })
     socket.on('disconnect', () => {
+      
         Object.keys(connectedUsers).forEach(key=>{
           if(connectedUsers[key] === socket){
+            Chats.lastSeen(key,MongoClient,uri)
             io.emit('isOffline', key)
             delete connectedUsers[key]
             console.log('yes')

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created by chuksjohnleo" />
+    <link rel="stylesheet" href="/login.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/recoverpass.css" />
+    <title>Recover password | Subscribe</title>
+  </head>
+  <body class="bg">
+    <nav  class="bg">
+      <div><a class="link" href="/login">  ← Back </a></div>
+      <div style="display: flex;"><span style="display: inline-block;margin: 15px 0;" id="color-name">Aqua</span><div class="bg-slide"><span  id="slider" class="slider"></span></div></div>
+    </nav>
+    <h1>Subscribe</h1>
+    <div id="root" class="bg">
+      <div class="wrapper bg">
+       
+        <div class="form" id="form"> 
+          <div><h2 class="i2">Recover password</h2></div>
+          <!-- <form onsubmit="submit()"> -->
+          <div class="form" id="email-container">
+            <input class="input" id="email" type="email" name="loginEmail" placeholder="email" />
+            <button id="submitBtn-e" class="btn" onclick="confirmUser()">Send Code</button>
+          </div>
+          <div class="pass-container" id="pass-container" style="display: none;">
+            <input
+            class="input"
+            id="code-reset"
+            type="number"
+            name="resetCode"
+            placeholder="Reset Code"
+            autocomplete="new-password"
+            
+          />
+            <input
+            class="input"
+            id="password"
+            type="password"
+            name="newPassword"
+            placeholder="new password"
+            autocomplete="new-password"
+          />
+          <input
+          class="input"
+          id="confirm-password"
+          type="password"
+          name="confirmNewPassword"
+          placeholder="confirm new password"
+          autocomplete="new-password"
+        />
+          <!-- <button id="te">test</button> -->
+          <!-- <input type="submit" value="submit"> -->
+          <!-- </form> -->
+            <label id="visibilityLabel"  class="pointer"><span id="visibilityText" class="bold">Show password</span><input id="visibility" type="checkbox"></label>
+            <button id="submitBtn" class="btn" onclick="submit()">Reset</button>
+      
+           </div>
+          <div><span  id="result" style='background:white;color:red;font-weight:800;'></span></div>
+          <div><span id="spinner" class="spinner"></span></div>
+        </div>
+        <!-- form -->
+      </div>
+    </div>
+    <footer style="position: sticky;bottom: 0px;transform: translateY(20vh); text-align: center;border-top: 2px solid grey;">
+      <p>Website by <a style="text-decoration: none;color: blue;" href="https://chuksjohnleo.github.io">Chuksjohnleo</a></p>
+      <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
+    </footer>
+    <script src="/recoverpass.js"></script>
+  </body>
+</html>

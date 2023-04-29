@@ -9,25 +9,30 @@
     <link rel="stylesheet" href="/app.css" />
     <title>Home | Subscribe</title>
   </head>
-  <body style="display: none;" id="body">
+  <body style="display: none;" id="body" class="bg">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <nav>
-      <div><a class="link" href="/login">Log out</a><a id="chats" class="link" >Chats</a><a id="profileLink" class="link">Profile</a></div>
+    <nav  class="bg">
+      <div><button class="bold btn menu-btn" id="menu-btn">≡ Menu</button><div class="links-container bg links-none" id="links-container"><a class="link" href="/login">Log out</a><a id="chats" class="link" >Chats</a><a id="profileLink" class="link">Profile</a></div></div>
+      <div style="display: flex;"><span style="display: inline-block;margin: 15px 0;" id="color-name">Aqua</span><div class="bg-slide"><span  id="slider" class="slider"></span></div></div>
     </nav>
-    <h1>Home | Welcome</h1>
-    <div id="root">
+    <!-- ♡≡ₓⅹ -->
+    <h1>Home | Subscribe</h1>
+    <div id="root" class="bg">
       <section>
         <div class="container">
-          <h1>Data Confirmation</h1>
+          <h2>Welcome <span id="welcome" style="color: blue;"></span></h2>
           <div>
-            <p>
-              <strong>
+            <div>
+              <div class="user-profilepics-container"><div class="user-profilepics-wrapper"><img class="user-profilepics" alt="Profile pics" id="profilepics"></div></div>
+              <p>
+               <strong>
                 Subscribe is so delighted to have you here.
-                Feel to Chat the developer of this app through the chat section.
+                Feel free to Chat the developer of this app through the chat section.
                 His email is usually the first to appear in the friends list.
                 Thank you, enjoy yourself 😉.
-              </strong>
-            </p>
+               </strong>
+              </p>
+            </div>
             <strong>Click the button below to add new chatmates</strong>
           </div>
           <div>
@@ -73,15 +78,6 @@
       </p>
       <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
     </footer>
-    <script>
-      // function test(){
-      //   fetch('/user',{
-      //     method: 'post',
-      //     headers: {authorization: sessionStorage.getItem('token')}
-      //   });
-      // }
-      // test()
-    </script>
     <script src="/home.js"></script>
   </body>
 </html>

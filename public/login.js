@@ -8,6 +8,43 @@ const submitBtn = document.getElementById("submitBtn");
 const visibility = document.getElementById("visibility");
 const visibilityText = document.getElementById("visibilityText");
 sessionStorage.clear();
+
+const bg = document.querySelectorAll('.bg');
+const slider = document.getElementById('slider');
+const colorName = document.getElementById('color-name');
+
+function chooseBg(color){
+for(let i=0;i<bg.length;i++){
+  bg[i].style.transition = '1.5s';
+  bg[i].style.background = color;
+}
+if(color === 'aqua') {
+  slider.style.background = 'white';
+  slider.classList.add('slide');
+  colorName.innerText = 'Aqua';
+}
+else {
+  slider.style.background = 'aqua';
+  slider.classList.remove('slide');
+  colorName.innerText = 'White';
+}
+}
+slider.addEventListener('click',()=>{
+  if(localStorage.getItem('bg-color') === 'white') localStorage.setItem('bg-color','aqua');
+  else localStorage.setItem('bg-color','white');
+  chooseBg(localStorage.getItem('bg-color'));
+});
+window.onload=()=>{
+  if(localStorage.getItem('bg-color')){
+    chooseBg(localStorage.getItem('bg-color'));
+  }else{
+    chooseBg('aqua')
+  }
+}
+
+
+
+
 visibility.addEventListener("click", () => {
   if (visibility.checked) {
     visibilityText.innerText = "Hide password";
@@ -38,6 +75,7 @@ function submit() {
   result.innerHTML = "";
   submitBtn.disabled = true;
   spinner.classList.add("spin");
+  
   fetch("/log-in", {
     method: "post",
     headers: { "Content-Type": "application/json" },
@@ -54,8 +92,9 @@ function submit() {
       spinner.classList.remove("spin");
       if (res.token) {
         sessionStorage.setItem("token", res.token);
-        window.location.href =`/${res.username}`;
-        return;
+       if(res.isVerified === true) window.location.href =`/${res.username}`;
+       else  window.location.href =`/verify-your-email`;
+       return;
       }
       result.innerHTML = res;
     })

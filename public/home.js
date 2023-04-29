@@ -6,7 +6,63 @@ const spinner = document.getElementById("spinner");
 const body = document.getElementById('body');
 const users = document.getElementById('users');
 const getusersbtn = document.getElementById('getusersbtn')
+const welcome = document.getElementById('welcome');
+const profilepics = document.getElementById('profilepics');
+const linksContainer = document.getElementById('links-container');
+const menuBtn = document.getElementById('menu-btn');
 
+const bg = document.querySelectorAll('.bg');
+const slider = document.getElementById('slider');
+const colorName = document.getElementById('color-name');
+
+function chooseBg(color){
+for(let i=0;i<bg.length;i++){
+  bg[i].style.transition = '1.5s';
+  bg[i].style.background = color;
+}
+if(color === 'aqua') {
+  slider.style.background = 'white';
+  slider.classList.add('slide');
+  colorName.innerText = 'Aqua';
+}
+else {
+  slider.style.background = 'aqua';
+  slider.classList.remove('slide');
+  colorName.innerText = 'White';
+}
+}
+slider.addEventListener('click',()=>{
+  if(localStorage.getItem('bg-color') === 'white') localStorage.setItem('bg-color','aqua');
+  else localStorage.setItem('bg-color','white');
+  chooseBg(localStorage.getItem('bg-color'));
+});
+
+window.onload=()=>{
+  if(localStorage.getItem('bg-color')){
+    chooseBg(localStorage.getItem('bg-color'));
+  }else{
+    chooseBg('aqua')
+  }
+ 
+}
+
+root.onclick=()=>{
+  if(linksContainer.className.includes('flex')){
+    linksContainer.classList.add('links-none');
+    return linksContainer.classList.remove('flex');
+  }
+}
+
+menuBtn.addEventListener('click',()=>{
+ if(!linksContainer.className.includes('flex')){
+  linksContainer.classList.remove('links-none')
+  return linksContainer.classList.add('flex');
+}
+ else {
+  linksContainer.classList.add('links-none');
+  return linksContainer.classList.remove('flex');
+}
+});
 
 async function checkUser() {
   await fetch(`${location.href}/user-session`, {
@@ -22,6 +78,8 @@ async function checkUser() {
         window.location.href = "/login";
         return;
       }
+      welcome.textContent = res.user;
+      profilepics.src = `/profile/get-profile-pics/${res.profilePicture}`
       body.style.display = 'block';
       document.getElementById("profileLink").href = res.user + "/profile";
       document.getElementById("chats").href = res.user + "/chats";
@@ -85,7 +143,9 @@ async function getUsers(){
     .then((res) => {
 spinner.classList.remove("spin");
 if(res.length > 0){
+
     res.forEach(resp => {
+      
     let div = document.createElement('div');
     div.classList.add('user')
     div.innerHTML = 
@@ -94,7 +154,7 @@ if(res.length > 0){
             <div class="pics-container"><img class="profilepics" alt="profilepics" src="/profile/get-profile-pics/${resp.profilePicture}" height="200px" width="200px"/></div>
             <span class="user-detail" style="text-align:center;" id=${resp.email}>${resp.username}</span>
             <div class="add-btn-wrapper" id='btnContainer'>
-              <button class="add-btn adder" value=${resp.email}>Add</button>
+              <button class="add-btn adder" value=${resp._id}>Add</button>
             </div>
            </div>
         `
@@ -114,7 +174,7 @@ if(res.length > 0){
                        authorization: sessionStorage.getItem("token")
                      },
             body: JSON.stringify({
-              email: friend.value
+              friend: friend.value
             })
           }).then(res=>{
             return res.json()

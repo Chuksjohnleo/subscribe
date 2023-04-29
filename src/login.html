@@ -13,13 +13,14 @@
     </script>
     <title>Login | Subscribe</title>
   </head>
-  <body>
-    <nav>
-      <a href="/"><button class="btn">Back</button></a>
+  <body class="bg">
+    <nav  class="bg">
+      <div><a class="link" href="/">  ← Back </a></div>
+      <div style="display: flex;"><span style="display: inline-block;margin: 15px 0;" id="color-name">Aqua</span><div class="bg-slide"><span  id="slider" class="slider"></span></div></div>
     </nav>
     <h1>Subscribe</h1>
-    <div id="root">
-      <div class="wrapper">
+    <div id="root" class="bg">
+      <div class="wrapper bg">
        
         <div class="form" id="form"> 
           <div><h2 class="i2">Login</h2></div>
@@ -36,14 +37,15 @@
           <!-- <input type="submit" value="submit"> -->
           <!-- </form> -->
           <label id="visibilityLabel" class="pointer"><span id="visibilityText" class="bold">Show password</span><input id="visibility" type="checkbox"></label>
-          <div><span  id="result" style='background:white;color:red;font-weight:800;'></span></div>
-          <p><span id="spinner" class="spinner"></span></p>
+          <div  style="text-align: center;"><span  id="result" style='background:white;color:red;font-weight:800;'></span></div>
+          <div><span id="spinner" class="spinner"></span></div>
           <button id="submitBtn" class="btn" onclick="submit()" disabled>Login</button>
           <p class="bold">Not registered?  <a href="/register"> Register </a></p>
+          <p class="bold"> Forgotten password?<a href="/s/recover-pass"> Click to recover </a></p>
         </div>
       </div>
     </div>
-    <footer style="position: sticky;bottom: 0px;transform: translateY(50vh); text-align: center;border-top: 2px solid grey;">
+    <footer style="position: sticky;bottom: 0px;transform: translateY(20vh); text-align: center;border-top: 2px solid grey;">
       <p>Website by <a style="text-decoration: none;color: blue;" href="https://chuksjohnleo.github.io">Chuksjohnleo</a></p>
       <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
     </footer>

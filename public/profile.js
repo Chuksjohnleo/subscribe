@@ -27,6 +27,45 @@ const uploadsContainer = document.getElementById('uploadsContainer');
 const profilePicture = document.getElementById('profilePicture');
 const filename = document.getElementById("filename");
 
+
+const bg = document.querySelectorAll('.bg');
+const slider = document.getElementById('slider');
+const colorName = document.getElementById('color-name');
+
+function chooseBg(color){
+for(let i=0;i<bg.length;i++){
+  bg[i].style.transition = '1.5s';
+  bg[i].style.background = color;
+}
+if(color === 'aqua') {
+  slider.style.background = 'white';
+  slider.classList.add('slide');
+  colorName.innerText = 'Aqua';
+}
+else {
+  slider.style.background = 'aqua';
+  slider.classList.remove('slide');
+  colorName.innerText = 'White';
+}
+}
+slider.addEventListener('click',()=>{
+  if(localStorage.getItem('bg-color') === 'white') localStorage.setItem('bg-color','aqua');
+  else localStorage.setItem('bg-color','white');
+  chooseBg(localStorage.getItem('bg-color'));
+});
+
+window.onload=()=>{
+  checkUser();
+  if(localStorage.getItem('bg-color')){
+    chooseBg(localStorage.getItem('bg-color'));
+  }else{
+    chooseBg('aqua')
+  }
+ 
+}
+
+
+
 function choosePics(){
     uploadsContainer.style.display = 'flex';
 }
@@ -35,7 +74,7 @@ function choosePics(){
   profilePicture.src = `/profile/upload-profile-pics/${sessionStorage.getItem('token')}`;
   profilePicture.style.display = 'block';
   photoSpan.style.display = 'none';
-  photo.style.background = 'aqua';
+  photo.classList.add('bg');
   filename.innerHTML = picsFile.value.replace(/.*[\/\\]/, '');
   profilePicture.src = URL.createObjectURL(picsFile.files[0]);
  }
@@ -59,12 +98,12 @@ function upload(){
           profilePicture.src = `/profile/upload-profile-pics/${sessionStorage.getItem('token')}`;
           profilePicture.style.display = 'block';
           photoSpan.style.display = 'none';
-          photo.style.background = 'aqua';
+          photo.classList.add('bg');
           location.reload();
       }
     })
     .catch((err) => {
-      console.log(err);
+     guide.innerHTML = 'Error';
     });
 
 }
@@ -101,17 +140,18 @@ async function checkUser() {
           return res.json();
         })
         .then((res) => {
-          console.log(res)
+         
           if(res.error) return location.href = '/login';
           if(res.profilePicture){
              photoSpan.style.display = 'none';
-             photo.style.background = 'aqua';
+             photo.classList.add('bg');
             }
           else profilePicture.style.display = 'none';
+          let date = new Date(res.joined);
           lname.value = res.lastName;
           fname.value = res.firstName;
-          email.value = res.email;
-          joined.value = res.joined;
+          email.value = res.email;//replace(/.*[\/\\]/, '')
+          joined.value = date.toDateString()  +' at ' + res.joined.replace(/.*[\T\\]/,''); //.slice(res.joined.indexOf("T")+1);
           username.value = res.username;
           passwordf.value = "•••••••";
           photoSpan.innerHTML =
@@ -125,7 +165,7 @@ async function checkUser() {
       window.location.href = "/login";
     });
 }
-window.onload=()=>checkUser();
+
 
 function enable() {
   let inputs = document.querySelectorAll("input");
@@ -159,7 +199,7 @@ cancelEnabler.addEventListener('click',()=>{
   email.value = JSON.parse(e);
 })
 emailChange.addEventListener('click',()=>{
-  if(email.value === JSON.parse(e) || email.value.includes(' ') || !email.value.includes('.com') )return alert('Invalid or existing Email');
+  if(email.value === JSON.parse(e) || email.value.includes(' ') || !email.value.includes('@') || !email.value.includes('.') )return alert('Invalid or existing Email');
   confirmer.innerHTML = 
   `
   <p>
@@ -224,10 +264,19 @@ update.disabled = true;
       return res.json();
     })
     .then((res) => {
-      sessionStorage.clear();
       spinner.classList.remove("spin");
-      confirmer.innerHTML = `<strong style="word-wrap:break-word;max-width:95%;color:blue;">Visit your email <span style="color:blue;">${email.value}</span> to confirm your email</strong><a class="block btn" href="/login">Back to login</a>`
-   })
+      if(res === 'incorrect password'){
+        result.innerHTML = "<span style='word-wrap:break-word;font-weight:800;max-width:95%;color:red;'>Improper email or password, please use another email</span>";
+        return;
+      }
+      if(res !== 'failed'){
+      sessionStorage.clear();
+      confirmer.innerHTML = `<strong style="word-wrap:break-word;max-width:95%;">Visit your email <span style="color:blue;">${email.value}</span> to confirm your email</strong><a class="block btn" href="/login">Back to login</a>`
+      }else{
+        "<span style='word-wrap:break-word;font-weight:800;max-width:95%;color:red;'>Something Went Wrong</span>";
+        
+      }
+    })
     .catch((err) => {
       update.disabled = false;
       update.style = 'background:white;';
@@ -250,6 +299,7 @@ function pEdit() {
     guide.innerHTML = 'invalid email address, maybe your email doesnt have ".com" extention';
     return;
   }
+  if(username.value.includes(' '))return alert("There shouldn't be space in username");
   if(password.value !== '' && password.value !== null && password.value !== '' && !password.value.includes(' ')){
     spinner.classList.add('spin');
   fetch("/reset", {
@@ -260,6 +310,7 @@ function pEdit() {
       lname: lname.value,
       email: email.value,
       password: password.value,
+      username:username.value,
       modified: new Date()
     })
   })
@@ -275,6 +326,10 @@ function pEdit() {
       if(res === "incorrect password"){
         guide.innerHTML = '<strong class="block">Incorrect password</strong>';
         return;
+    }
+    if(res === "username already exist"){
+      guide.innerHTML = '<strong class="block">Username already exist</strong>';
+      return;
     }
     if(res.token){
        sessionStorage.setItem('token',res.token)

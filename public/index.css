@@ -2,6 +2,9 @@ header{
     display: grid;
     grid-template-columns: 1fr 2fr;
     border-bottom: 4px double black;
+    position: sticky;
+    top: 0;
+    z-index: 99;
 }
 nav{
    color: black;
@@ -13,13 +16,41 @@ nav{
     padding: 0px;
     transform: translateY(50%);
 }
+
+.devlink{
+    display: flex;
+    justify-content: center;
+    font-size: small;
+    
+}
+ 
+.logo-container{
+    display: flex;
+    justify-content: center;
+}
+
+.bg-slide{
+    transform: translateY(80%);
+    margin-bottom: 0;
+}
+/*
+.slide{
+   
+    transform: translateX(100%);
+} */
+
 .logo{
     max-width: 100%;
-    height: 20px;
+    height: 40px;
+    
 }
 @media screen and (min-width:500px){
     .i-h1{
         padding: 0px;
         transform: translateY(0%);
+    }
+    .bg-slide{
+        transform: translateY(0%);
+        margin-bottom: 0;
     }
 }

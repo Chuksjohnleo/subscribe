@@ -1,5 +1,10 @@
+nav{
+    justify-content: space-between;
+}
+
 .wrapper{
-    background-color: aqua;
+    background-color: white;
+    /* background-color: aqua; */
     display: flex;
     justify-content: center;
     transform: translateY(0%); 
@@ -26,4 +31,10 @@ h1{
     .btn:hover{
        color: blue;
        }
+}
+
+@media  screen and (max-width:230px) {
+    .i2::before, .i2::after{
+        width: 0px;
+    }
 }

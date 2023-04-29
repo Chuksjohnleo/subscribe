@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="/profile.css" />
     <title>Profile | Subscribe</title>
   </head>
-  <body style="display: none;" id="body">
+  <body style="display: none;" id="body" class="bg">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <nav>
-      <div><button class="link" onclick="back()">← Back to home</button></div>
+    <nav  class="bg">
+      <div><button class="link" onclick="back()">← home</button></div>
+      <div style="display: flex;"><span style="display: inline-block;margin: 15px 0;" id="color-name">Aqua</span><div class="bg-slide"><span  id="slider" class="slider"></span></div></div>
     </nav>
     <h1>Profile</h1>
     <div class="dark">
@@ -41,7 +42,7 @@
       </div>
       </div>
     </div>
-    <div id="root">
+    <div id="root" class="bg">
       <!-- profile pics -->
       <div class="photo" id="photo">
         <div class="image-or-initial">

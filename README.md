@@ -1,4 +1,4 @@
-# Suscribe
+# Subscribe
 This Simple Chat App is a fullstack app that am still working on.
 
 ![Preview](https://chuksjohnleo.github.io/images/chatapp.png)

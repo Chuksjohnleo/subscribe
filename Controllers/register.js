@@ -9,6 +9,7 @@ const hash = await  bcrypt.hash(user.password, saltRounds);
     const db = client.db('suscribe');
     const users = db.collection('users');
     const login = db.collection('login');
+    const counter = db.collection('counter');
 
      //start session
     const session = client.startSession();
@@ -16,18 +17,26 @@ const hash = await  bcrypt.hash(user.password, saltRounds);
 
     const checkEmail = await users.findOne({$or:[{email:user.email},{username:user.username}]},{session});
     if(checkEmail === null){
-    await login.insertOne({email: user.email,hash:hash},{session});
+    await counter.findOneAndUpdate(
+                                  { _id: "userid" },
+                                  { $inc: { count: 1 } },
+                                  {upsert:true, returnDocument: 'after' },
+  async (e,response)=>{
+    if(e)return;
+    await login.insertOne({_id: 'U'+response.value.count,email: user.email,hash:hash},{session});
     const email = await login.findOne({email: user.email,hash:hash},{session});
     await users.insertOne({
-        _id: email._id.toString(),
+        _id: 'U'+response.value.count,
         firstName: user.fname,
         lastName:user.lname,
         joined: user.joined,
         email: email.email,
         username: user.username,
-        friends: ["nwanonenyichukwuka@gmail.com"]
+        lastSeen: '',
+        gender: user.gender,
+        friends: ["U1"]
     },{session});
-    await users.findOne({email: email.email},{session}).then(resp=>{
+    await users.findOne({_id:'U'+response.value.count,email: email.email},{session}).then(resp=>{
       JSON.stringify(resp);
       let token = jwt.sign(
           resp,
@@ -36,13 +45,14 @@ const hash = await  bcrypt.hash(user.password, saltRounds);
         );
         res.json({token});
     });
+  });
     }else{
       res.json('Email or Username already exists');
     }
 
   // Commit the transaction
     await session.commitTransaction();
-    console.log("Transaction committed");
+    console.log("Registration Transaction committed");
 
   }catch (err) {
     console.log("Transaction failed:", err);

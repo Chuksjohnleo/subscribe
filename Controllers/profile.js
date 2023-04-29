@@ -13,13 +13,13 @@ async function profilePicture(req,res,MongoClient,uri,jwt,deleter){
     
      session.startTransaction();
 
-    const getInfo = await login.findOne({email: req.user.email},{session});
+    const getInfo = await login.findOne({_id:req.user._id,email: req.user.email},{session});
     
     if(getInfo !== null){
-          await users.updateOne({email:req.user.email}, { $set: {profilePicture: req.file.filename}},{session});
+          await users.updateOne({_id:req.user._id,email:req.user.email}, { $set: {profilePicture: req.file.filename}},{session});
      };
-      const data =  await users.findOne({email:req.user.email},{session});
-      console.log(data);
+      const data =  await users.findOne({_id:req.user._id,email:req.user.email},{session});
+      console.log(data,'at line 22 profile');
       if(req.user.profilePicture !== undefined) deleter(req.user.profilePicture);
       let token = jwt.sign(
         data,
@@ -31,7 +31,7 @@ async function profilePicture(req,res,MongoClient,uri,jwt,deleter){
            res.json({msg:"successful",token:token});
            console.log("Transaction committed");
     }catch(e){
-      console.log("Trx failed:", e);
+      console.log("Profile picture save Trx failed:", e);
       // If an error occurred, abort the transaction
       if (session) await session.abortTransaction();
       res.json('failed');
@@ -53,14 +53,17 @@ async function editProfile(req,res,MongoClient,uri,jwt){
         const session = client.startSession();
         session.startTransaction();
 
-        const getInfo = await login.findOne({email: req.user.email},{session});
+        const getInfo = await login.findOne({_id:req.user._id,email: req.user.email},{session});
+        const checkInfo = await users.findOne({username: req.body.username},{session});
+        if(checkInfo !== null)return res.json("username already exist");
         if(getInfo !== null){
         const validUser = bcrypt.compareSync(req.body.password, getInfo.hash)
         if(validUser){ 
-            await users.updateOne({email: req.body.email}, { $set: { firstName: req.body.fname,lastName:req.body.lname,modified: req.body.modified }},{session})
+          console.log(req.body)
+            await users.updateOne({_id:req.user._id, email: req.body.email}, { $set: { username: req.body.username, firstName: req.body.fname,lastName:req.body.lname,modified: req.body.modified }},{session})
             .then( async (resp)=>{
               if(resp.modifiedCount === 1){
-              const data =  await users.findOne({email:req.user.email},{session})
+              const data =  await users.findOne({_id:req.user._id,email:req.user.email},{session})
               let token = jwt.sign(
                 data,
                 'secretkey',

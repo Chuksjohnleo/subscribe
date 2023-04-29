@@ -1,9 +1,44 @@
 body{
+    /* background-color:aqua; */
+    background-color: white;
+}
+
+.bg-slide{
+    width: 40px;
+    height: 20px;
+    background-color: black;
+    border-radius: 12px;
+    border: 2px solid blue;
+    margin: 15px;
+ }
+
+ #color-name{
+    transform: translateY(20%);
+ }
+ 
+.slider{
+        display: inline-block;
+        background-color: aqua;
+        width: 20px;
+        height: 20px;
+        border-radius: 12px;
+        transition: 1s;
+}
+    
+.slide{
+     transform: translateX(100%);
+ }
+    
+
+.white{
+    background-color: white;
+}
+
+.aqua{
     background-color: aqua;
 }
 
 #root{
-    background-color: aqua;
     display: flex;
     justify-content: center;
     padding: 5%;
@@ -16,9 +51,15 @@ a{
 .block{
     display: block;
 }
+
 .none{
     display: none;
 }
+
+.flex{
+display: flex;
+}
+
 .space{
     margin: 10px;
 }
@@ -33,7 +74,7 @@ nav{
     font-weight: 900;
     position:sticky;
     top: 0px;
-    background-color: aqua;
+    background-color: white;
     padding-top: 15px;
     z-index: 999;
     padding-bottom: 5px;
@@ -86,9 +127,9 @@ nav{
 .input{
     height: 25px;
     width: 100%;
-    background: aqua;
+    background-color: white;
     border: 0px;
-    border-bottom: 3px solid white;
+    border-bottom: 3px solid black;
     text-align: center;
 }
 .i2{
@@ -103,6 +144,13 @@ nav{
     background: #000;
     width: 50px;
   }
+
+  @media  screen and (max-width:230px) {
+    .i2::before, .i2::after{
+        width: 0px;
+    }
+}
+
   .input:focus{
     outline: none;
     border-bottom: 3px solid blue;

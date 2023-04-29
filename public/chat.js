@@ -4,11 +4,15 @@ const input = document.getElementById("input");
 const message = document.getElementById("message");
 const body = document.getElementById("body");
 const typer = document.getElementById("typer");
+const lastseen = document.getElementById('lastseen');
 const friend = document.getElementById("friend");
 const messages = document.getElementById("messages");
 const changeBg = document.getElementById("change-bg");
 const backBtn = document.getElementById("back-btn");
 const backBtn1 = document.getElementById("back-btn1");
+const secNav = document.getElementById("sec-nav");
+const firstNav = document.getElementById("first-nav");
+const iCont = document.getElementById("i-cont");
 const nav = document.querySelectorAll("nav")[0];
 const friendslist = document.getElementById("friendslist");
 const friendName = document.getElementById("friend-name");
@@ -19,6 +23,52 @@ const chatProper = document.getElementById("chat-proper");
 const emojibtn = document.getElementById('emojibtn')
 const emojiContainer = document.getElementById("emojis");
 
+
+const bg = document.querySelectorAll('.bg');
+const slider = document.getElementById('slider');
+const colorName = document.getElementById('color-name');
+
+function chooseBg(color){
+for(let i=0;i<bg.length;i++){
+  bg[i].style.transition = '1.5s';
+  bg[i].style.background = color;
+}
+if(color === 'aqua') {
+  slider.style.background = 'white';
+  slider.classList.add('slide');
+  colorName.innerText = 'Aqua';
+}
+else {
+  slider.style.background = 'aqua';
+  slider.classList.remove('slide');
+  colorName.innerText = 'White';
+}
+}
+slider.addEventListener('click',()=>{
+  if(localStorage.getItem('bg-color') === 'white') localStorage.setItem('bg-color','aqua');
+  else localStorage.setItem('bg-color','white');
+  chooseBg(localStorage.getItem('bg-color'));
+});
+
+window.onload=()=>{
+  if(!sessionStorage.getItem('friend')){
+  if(localStorage.getItem('bg-color')){
+    chooseBg(localStorage.getItem('bg-color'));
+  }else{
+    chooseBg('aqua')
+  }
+}
+  if (sessionStorage.getItem("friend")) {
+    message.textContent = sessionStorage.getItem(`draft${sessionStorage.getItem("friend")}`)
+    chatFriend( sessionStorage.getItem("friendsname"),sessionStorage.getItem("friend"));
+    getfriends();
+    return;
+  }
+  getfriends();
+ 
+}
+
+
 document.querySelector('[contenteditable]').addEventListener('paste', function(e) {
   e.preventDefault();
   const text = e.clipboardData.getData('text/plain');
@@ -27,10 +77,16 @@ document.querySelector('[contenteditable]').addEventListener('paste', function(e
 
 
 body.style.display = "none";
-backBtn.style.display = "none";
-changeBg.style.display = "none";
+iCont.style.display = "none";
+secNav.style.display = "none";
 
-function changeBackground() {
+function changeBackground(q) {
+  function checkbg(){
+    if(localStorage.getItem('bgcolor')) localStorage.removeItem('bgcolor');
+    else localStorage.setItem('bgcolor','set')
+  };
+
+  if( q === 'btn') checkbg();
   let received = messages.querySelectorAll(".received");
   body.classList.toggle("aqua");
   received.forEach((r) => {
@@ -85,18 +141,20 @@ function addFriendslist() {
   sessionStorage.removeItem("friend");
 }
 
-function provideNav(friend) {
-  backBtn.style.display = "inline-block";
-  changeBg.style.display = "inline-block";
-  friendName.innerHTML = friend;
+function provideNav(username) {
+  iCont.style.display = 'flex';
+  secNav.style.display = 'flex';
+  friendName.innerHTML = username;
   nav.classList.add("h-100");
-  backBtn1.style.display = "none";
+  firstNav.style.display = "none";
 }
 
-function chatFriend(friend) {
-  typer.innerHTML = 'Loading Chat messages....';
+function chatFriend(username,id) {
+  document.getElementById('placeholder').style.display = 'none';
+  typer.innerHTML = 'Loading Chat messages...';
   removeFriendslist();
-  provideNav(friend);
+  provideNav(username);
+  sessionStorage.setItem("friendsname",username);
   messages.innerHTML = "";
   fetch(`${location.href}`, {
     method: "post",
@@ -104,7 +162,7 @@ function chatFriend(friend) {
       "Content-Type": "application/json",
       authorization: sessionStorage.getItem("token"),
     },
-    body: JSON.stringify({ friend: friend }),
+    body: JSON.stringify({ friend:id }),
   })
     .then((res) => {
      
@@ -117,18 +175,25 @@ function chatFriend(friend) {
         return;
       }
       body.classList.add("white");
+      body.style = 'display:block;';
       chatProper.style.display = "block";
-      sessionStorage.setItem("friend", friend);
-      sessionStorage.setItem("user", res.user.email);
-      const unsent = {};
-      unsent[friend] = [];
+      sessionStorage.setItem("friend", id);
+      sessionStorage.setItem("user", res.user._id);
+    //   const unsent = {};
+    //   unsent[friend] = [];
     
-       if(!sessionStorage.getItem(`unsent${friend}`)){
-         sessionStorage.setItem(`unsent${friend}`,JSON.stringify(unsent));
-     }
+    //    if(!sessionStorage.getItem(`unsent${friend}`)){
+    //      sessionStorage.setItem(`unsent${friend}`,JSON.stringify(unsent));
+    //  }
  
       if (res.messages) {
-        typer.innerHTML = '';
+       
+        typer.innerHTML = 'Offline';
+        if(res.lastSeen.lastSeen.length > 3){
+          let lasttime = new Date(res.lastSeen.lastSeen)
+          lastseen.innerHTML = ' last seen '+ lasttime.toDateString() + ' at '
+           + lasttime.getHours()+':'+ lasttime.getMinutes() ;  
+        }
         if (res.messages.length > 0) {
           
           res.messages.forEach((message,i) => {
@@ -239,8 +304,9 @@ function chatFriend(friend) {
     //    sendUnsent(e);
     // });
    
-        login({ user: res.user.email, friend: friend });
-      }
+        login({ user: res.user._id, friend: id });
+        if(localStorage.getItem('bgcolor'))changeBackground('win');
+      };
     })
     .catch((err) => {
       result.innerHTML = "There was error fetching your datails";
@@ -267,7 +333,8 @@ async function getfriends() {
         div.classList.add("user");
         div.innerHTML = `
            <div class="user-p">
-              <span class="user-detail" id=${resp}>${resp}</span>
+             <img class="profilepics" alt="profilepics" src="/profile/get-profile-pics/${resp.profilePicture}" height="200px" width="200px" /> 
+             <span style="text-align:center;" class="user-detail" id=${resp._id}>${resp.username}</span>
             </div>
         `;
         users.appendChild(div);
@@ -277,7 +344,7 @@ async function getfriends() {
         for (let f = 0; f < friends.length; f++) {
           let friend = friends[f];
           friend.addEventListener("click", () => {
-            chatFriend(friend.textContent);
+            chatFriend(friend.textContent,friend.id);
           });
         }
       }
@@ -288,15 +355,15 @@ async function getfriends() {
     });
 }
 
-window.onload = () => {
-  if (sessionStorage.getItem("friend")) {
-    message.textContent = sessionStorage.getItem(`draft${sessionStorage.getItem("friend")}`)
-    chatFriend(sessionStorage.getItem("friend"));
-    getfriends();
-    return;
-  }
-  getfriends();
-};
+//window.onload = () => {
+  // if (sessionStorage.getItem("friend")) {
+  //   message.textContent = sessionStorage.getItem(`draft${sessionStorage.getItem("friend")}`)
+  //   chatFriend( sessionStorage.getItem("friendsname"),sessionStorage.getItem("friend"));
+  //   getfriends();
+  //   return;
+  // }
+  // getfriends();
+//};
 
 function typist() {
   sessionStorage.setItem(`draft${sessionStorage.getItem("friend")}`,message.textContent);
@@ -328,18 +395,19 @@ window.onfocus=()=>{
 
 socket.on("typing user", (data) => {
   
-  if (data.message === "typing") {
-    let message = `Your friend is typing... ${data.info}`;
+  if (data.message === "typing" && data.to === sessionStorage.getItem("user") && data.from === sessionStorage.getItem("friend")) {
+    let message = `typing... ${data.info}`;
     typer.innerHTML = message;
     return;
   }
-  typer.innerHTML = data.message;
+  typer.innerHTML = 'Online but busy';
 });
 
 let a = "Offline";
 socket.on("isOnline", function (msg) {
   //friend who just came online
   if (msg.friend === sessionStorage.getItem("user")) {
+    lastseen.innerHTML = ''
     socket.emit("Online too", {
       from: sessionStorage.getItem("user"),
       to: sessionStorage.getItem("friend"),
@@ -360,6 +428,7 @@ socket.on("isOnline", function (msg) {
 socket.on("Online too", function (msg) {
   //first person to come online
   if (msg.to === sessionStorage.getItem("user")) {
+    lastseen.innerHTML = '' ;
     a = "Online";
     typer.innerHTML = a;
     let lists = messages.querySelectorAll(".sent");
@@ -438,12 +507,18 @@ function sendUnsent(message){
 
 
 socket.on("private message", function (msg) {
-  let received = messages.querySelectorAll(".received")[0];
-  let li = document.createElement("p");
-  let nspan = document.createElement("span");
-  nspan.classList.add('nspan');
-  li.appendChild(nspan);
-  nspan.textContent = msg.message;
+  let currentDate = new Date();
+  let  daylist = document.createElement("p");
+  daylist.style = 'font-weight: 800;'
+  if(currentDate.getDay() !== startDate.getDay()){
+  let sp = document.createElement('span');
+  daylist.classList.add('daylist');
+  sp.innerHTML = `${currentDate.toDateString()}`;
+  daylist.appendChild(sp);
+  messages.appendChild(daylist);
+  startDate = new Date();
+  }  
+  //check date ends
 
   //set time
    
@@ -473,7 +548,13 @@ socket.on("private message", function (msg) {
     span.classList.add("sent-status");
     span.classList.add("sent-status-r");
   
-  if (msg.to === sessionStorage.getItem("user")) {
+  if (msg.to === sessionStorage.getItem("user") && msg.from === sessionStorage.getItem("friend")) {
+  let received = messages.querySelectorAll(".received")[0];
+  let li = document.createElement("p");
+  let nspan = document.createElement("span");
+  nspan.classList.add('nspan');
+  li.appendChild(nspan);
+  nspan.textContent = msg.message;
     if (received) {
       if (received.classList[1] !== undefined) {
         li.classList.add(received.classList[1]);
@@ -491,18 +572,19 @@ socket.on("private message", function (msg) {
   tobottom.scrollIntoView();
   typer.innerHTML = a;
 } else {
-  let parsed = JSON.parse(sessionStorage.getItem(`unsent${sessionStorage.getItem("friend")}`));
-  parsed[sessionStorage.getItem("friend")].forEach((e,i)=>{
-    if(e.id === msg.id){
-      if(i>0){
-      parsed[sessionStorage.getItem("friend")].splice(i,1);
-      }else{
-        parsed[sessionStorage.getItem("friend")].splice(0)
-      }
-    }
-  });
+  return;
+  // let parsed = JSON.parse(sessionStorage.getItem(`unsent${sessionStorage.getItem("friend")}`));
+  // parsed[sessionStorage.getItem("friend")].forEach((e,i)=>{
+  //   if(e.id === msg.id){
+  //     if(i>0){
+  //     parsed[sessionStorage.getItem("friend")].splice(i,1);
+  //     }else{
+  //       parsed[sessionStorage.getItem("friend")].splice(0)
+  //     }
+  //   }
+  // });
   
-  sessionStorage.setItem(`unsent${sessionStorage.getItem("friend")}`,JSON.stringify(parsed));
+  // sessionStorage.setItem(`unsent${sessionStorage.getItem("friend")}`,JSON.stringify(parsed));
 }
 });
 
@@ -563,13 +645,13 @@ form.addEventListener("click", function () {
   sp.innerHTML = `${currentDate.toDateString()}`;
   daylist.appendChild(sp);
   messages.appendChild(daylist);
- 
+  startDate = new Date();
   }  
   //check date ends
   sessionStorage.removeItem(`draft${sessionStorage.getItem("friend")}`)
   let date = new Date();
   if (message.textContent.length > 0 && message.textContent.length < 10000) {
-    let parsed = JSON.parse(sessionStorage.getItem(`unsent${sessionStorage.getItem("friend")}`));
+    // let parsed = JSON.parse(sessionStorage.getItem(`unsent${sessionStorage.getItem("friend")}`));
   
     let theMessage = {
       from: sessionStorage.getItem("user"),
@@ -579,10 +661,10 @@ form.addEventListener("click", function () {
       id: "n" + date.getTime(),
     };
     
-    //  let newmessages =
-      parsed[sessionStorage.getItem("friend")][parsed[sessionStorage.getItem("friend")].length]=theMessage;
+    // //  let newmessages =
+    //   parsed[sessionStorage.getItem("friend")][parsed[sessionStorage.getItem("friend")].length]=theMessage;
 
-    sessionStorage.setItem(`unsent${sessionStorage.getItem("friend")}`,JSON.stringify(parsed))
+    // sessionStorage.setItem(`unsent${sessionStorage.getItem("friend")}`,JSON.stringify(parsed))
     newMessage(theMessage);
     socket.emit("private message", {
       from: sessionStorage.getItem("user"),

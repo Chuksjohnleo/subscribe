@@ -9,19 +9,21 @@
     <link rel="stylesheet" type="text/css" href="/chat.css" />
     <title>Chats | Subscribe</title>
   </head>
-  <body id="body">
-    <nav>
+  <body id="body" class="bg">
+    <nav class="bg">
+      <div class="first-nav" id="first-nav">
+        <button id="back-btn1" onclick="history.back()" class="link bold">
+          ←  Home
+         </button>
+         <div style="display: flex;"><span style="display: inline-block;margin: 15px 0;" id="color-name">Aqua</span><div class="bg-slide"><span  id="slider" class="slider"></span></div></div>
+      </div>
       <div id="i-cont">
-        <h1 class="chat-h1">Chats</h1>
-        <button id="back-btn1" onclick="history.back()" class="link no-space">
-          ← Back
-        </button>
         <button id="back-btn" onclick="addFriendslist()" class="link no-space">
           ← Back
         </button>
         <button
           id="change-bg"
-          onclick="changeBackground()"
+          onclick="changeBackground('btn')"
           class="btn no-space"
         >
           Change background
@@ -30,11 +32,12 @@
 
       <div id="sec-nav">
         <div id="friend-name"></div>
-        <div id="typer"></div>
+        <div><span id="typer"></span><span id="lastseen"></span></div>
       </div>
     </nav>
+    <p id="placeholder" class="placeholder">Select a Friend to chat</p>
     <!-- <div class="all"> -->
-      <div id="friendslist">
+      <div id="friendslist" class="bg">
 
         <h2 class="i2">Friends</h2>
         <p style="text-align: center; font-weight: 700">

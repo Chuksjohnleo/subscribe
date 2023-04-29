@@ -15,15 +15,17 @@ try {
     if(getInfo !== null){
     const validUser = bcrypt.compareSync(req.body.password, getInfo.hash);
     if(validUser){ 
-    await users.findOne({email: getInfo.email},{session}).then(resp=>{
+    await users.findOne({_id:getInfo._id, email: getInfo.email},{session}).then(resp=>{
+      if(resp === null) return res.json('error not found');
       let token = jwt.sign(
         resp,
         'secretkey',
         {expiresIn: '6h'}
       );
-     return res.json({token:token,username:resp.username});
+      console.log(resp)
+     return res.json({token:token,username:resp.username,isVerified:resp.verified});
     });
-     }else{
+     }else{console.log(validUser)
         return res.json('incorrect details');
        }
     }else{

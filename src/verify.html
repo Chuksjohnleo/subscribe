@@ -7,20 +7,32 @@
     <meta name="description" content="Web site created by chuksjohnleo" />
     <link rel="stylesheet" href="/home.css" />
     <link rel="stylesheet" href="/app.css" />
-    <title>Home | Subscribe</title>
+    <title>Email verification | Subscribe</title>
   </head>
-  <body style="display: none;" id="body">
+  <body id="body" class="bg">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <nav>
-      <div><a class="link" href="/login">Log out</a><a id="chats" class="link" >Chats</a><a id="profileLink" class="link">Profile</a></div>
+    <nav  class="bg">
+      <div><a class="link" href="/login">← Back</a></div>
+      <div style="display: flex;"><span style="display: inline-block;margin: 15px 0;" id="color-name">Aqua</span><div class="bg-slide"><span  id="slider" class="slider"></span></div></div>
     </nav>
-    <h1>Home | Welcome</h1>
-    <div id="root">
+    <!-- ♡≡ₓⅹ -->
+    <h1>Verify your email | Subscribe</h1>
+    <div id="root" class="bg">
       <section>
         <div class="container">
-          <h1>Data Confirmation</h1>
           <div>
-            <strong>Click the button below to confirm your data</strong>
+            <div>
+              <p>
+               <strong>
+                Subscribe is so delighted to have you here.
+                In order to make your experience more delighting, your are required 
+                to verify your email.
+                Feel free to email us at <a href="mailto:nwanonenyichukwuka@gmail.com">Our email</a>
+                if you encounter any issue. Thank you, enjoy yourself 😉.
+               </strong>
+              </p>
+            </div>
+            <strong>Click the button below to send the email verification link</strong>
           </div>
           <div>
             <p id="result"></p>
@@ -30,16 +42,9 @@
                 id="confirmBtn"
                 class="confirm btn"
               >
-                Confirm your data
+               Send verification link
               </button>
             </p>
-            <p><button
-              onclick="getUsers()"
-              id="getusersbtn"
-              class="confirm btn"
-            >
-              Get users
-            </button></p>
           </div>
         </div>
       </section>
@@ -65,15 +70,6 @@
       </p>
       <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
     </footer>
-    <script>
-      // function test(){
-      //   fetch('/user',{
-      //     method: 'post',
-      //     headers: {authorization: sessionStorage.getItem('token')}
-      //   });
-      // }
-      // test()
-    </script>
-    <script src="/home.js"></script>
+    <script src="/verify.js"></script>
   </body>
 </html>

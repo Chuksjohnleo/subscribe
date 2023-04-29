@@ -3,9 +3,13 @@ body {
     padding-bottom: 3rem;
     font-family:BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif;
-      background-color:aqua;
+}
 
-  }
+.first-nav{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 
 .white{
   background-color: white;
@@ -13,17 +17,19 @@ body {
 
 #friendslist{
   position: absolute;
-  background-color: aqua;
   width: 100%;
   z-index: 99;
 }
 
+#users{
+  border-radius: 12px;
+}
 /* #friendslist::-webkit-scrollbar{
   display: none;
 } */
 
 nav{   
-    flex-direction: column;
+    /* flex-direction: column; */
     padding: 2px;
 }
 .chat-h1{
@@ -31,33 +37,59 @@ nav{
   margin: 0px auto;
 }
 .h-100{
-  min-height: 120px; 
+  min-height: 60px; 
 }
 #sec-nav{
+
   display: flex;
   flex-direction: column;
-  padding:0 1rem 1rem 1rem;
+  justify-content: center;
+  width: 50%;
+  padding-left: 5px;
+  border-left: 5px double white;
+  /* padding:0 1rem 1rem 1rem; */
+}
+#i-cont{
+ display: none;
+ margin-right: 0;
+ width: 50%;
 }
 
 #typer{
-  text-align: right;
+  text-align: left;
+  overflow-x: hidden;
+ text-overflow:ellipsis ; 
+ height: 90%;
+
 }
 
 #friend-name{
   font-weight: 500;
   max-width: 150px;
   word-wrap: break-word;
+  overflow-x: hidden;
+  height: 50px;
 }
-/* @media (min-width:500px){
-  #friend-name{
-    max-width: 450px;
+.profilepics{
+  margin-bottom: 5px;
+  border-radius: 12px;
+  border: 2px double aqua;
+}
+@media (max-width:400px){
+  #sec-nav{
+    width: 40%;
   }
-} */
-
-#i-cont{
-    display: flex;
-   
+  #i-cont{
+    font-weight: 100;
+    width: 60%;
   }
+  #friend-name,#typer,#lastseen{
+    font-size: smaller;
+    max-width: 120px;
+    font-weight: 300;
+    text-align: center;
+  }
+}
 
   #form {
     background:white;
@@ -223,9 +255,9 @@ nav{
 .user-detail{
     display: inline-block;
     border: 1px solid aqua;
-    padding: 1.1rem 1.5rem;
-    margin: 0 1rem;
-    width:70vw ;
+     /* padding: 1.1rem 1.3rem;
+    margin: 0 1rem; 
+    width:70vw ; */
     word-wrap: break-word;
     cursor: pointer;
 }
@@ -243,7 +275,7 @@ nav{
 
 
 .user-p:hover{
-  background-color: aqua;
+ 
   color: blue;
 }
 
@@ -299,18 +331,24 @@ nav{
 #emojibtn:active{
   background-color: rgb(35, 158, 158);
 }
-
+.placeholder{
+  display: none;
+}
 @media screen and (min-width:800px){
-
+  #tobottom{
+    text-align: center;
+    font-weight: 900;
+    height: 100px;
+   }
 #friendslist{
   position: fixed;
   background-color: aqua;
   width: 50%;
   z-index: 9;
-  top: 120px;
+  top: 60px;
   bottom: 0;
   overflow-y: scroll;
-  height: calc(100%-122px);
+  height: calc(100%-61px);
 }
 
 #chat-proper{
@@ -318,20 +356,23 @@ nav{
   width: 50%;
   left: 50%;
   z-index: 9;
-  top: 120px;
+  top: 60px;
   bottom: 0;
   overflow-y: scroll;
-  height: calc(100%-200px);
+  height: calc(100%-60px);
 }
+
+
 #form{
   left: 50%;
   right: 20px;
   bottom: 20px;
 }
 .user-detail{
-  width: 80%;
+  width: 70%;
   padding: 1.1rem 1rem;
   margin: 0 0.7rem;
+  text-align: center;
 }
 .none-friends{
   display: block;
@@ -345,6 +386,16 @@ nav{
 }
 .daylist{
   width: 90%;
+}
+.placeholder{
+  display: block;
+  position: fixed;
+  width: 250px;
+  height: 250px;
+  top: 45%;
+  right: 12%;
+  font-size: 20px;
+  font-weight: 900;
 }
 }
 

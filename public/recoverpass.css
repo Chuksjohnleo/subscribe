@@ -1,0 +1,38 @@
+#visibilityLabel{
+    margin: 1rem;
+}
+
+.pass-container{
+    display:flex;
+    min-width: 90%;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+#email,#password,#confirm-password,#code-reset{
+    max-width: 100%;
+    font-weight: 900;
+}
+
+.i2{
+ font-size: small;
+}
+
+.i2::before, .i2::after{
+    width: 22px;
+}
+
+@media  screen and (min-width:350px) {
+    .i2::before, .i2::after{
+        width: 50px;
+    }
+   .i2{
+     font-size: medium;
+    }
+}
+
+@media  screen and (max-width:230px) {
+    .i2::before, .i2::after{
+        width: 0px;
+    }
+}

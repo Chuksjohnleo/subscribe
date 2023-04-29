@@ -10,24 +10,57 @@
     <link rel="stylesheet" href="/index.css"/>
     <title>Subscribe</title>
   </head>
-  <body>
-  <header>
+  <body class="bg">
+  <header class="bg">
     <h1 class="i-h1">Subscribe</h1>
-    <nav>
-      <div><a class="link" href="https://chuksjohnleo.github.io">Developer's Homepage</a></div>
+    <nav  class="bg" style="position: sticky;top: 0px;">
+      <div class="bg-slide"><span  id="slider" class="slider"></span></div>
+      <!-- <div><button onclick="chooseBg('black')">gg</button></div> -->
     </nav>
   </header>
-    <div id="root">
-      <div style="background-color: white;padding: 40px;border-radius: 12px;">
-        <div><img class="logo" alt="logo" src="/logo.svg"></div>
+    <div id="root" class="bg">
+      <div style="background-color: white;padding: 40px;border-radius: 12px;min-width: 60vw;max-width: 80vw;">
+        <div class="logo-container"><img class="logo" alt="logo" src="/logo.svg"></div>
         <h2 style="text-align: center;">Greetings</h2>
         <p  style="text-align: center;"><strong>Welcome to our platform</strong></p>
-        <p class="bold" style="text-align: center;"> Please <a class="link" href="/login">Login</a> or<a class="link" href="/register">Register</a> to suscribe.</p>
+        <p class="bold" style="text-align: center;"> Please 
+          <a class="link" style="transform: translateY(-25%);display: block;" href="/login">Login</a> 
+          <span>or</span>
+          <a class="link" style="transform: translateY(-25%);display: block;" href="/register">Register</a> to subscribe.</p>
+        <div class="devlink"><a class="link" href="https://chuksjohnleo.github.io">Developer's Homepage</a></div>
       </div>
     </div>
     <footer style="position: sticky;bottom: 0px;transform: translateY(50vh); text-align: center;border-top: 2px solid grey;">
       <p>Website by <a style="text-decoration: none;color: blue;" href="https://chuksjohnleo.github.io">Chuksjohnleo</a></p>
       <p>Copyright © 2023 Chuksjohnleo, All rights reserved.</p>
     </footer>
+    <script>
+    
+      const bg = document.querySelectorAll('.bg');
+      const slider = document.getElementById('slider');
+     
+     function chooseBg(color){
+      for(let i=0;i<bg.length;i++){
+        bg[i].style.transition = '1.5s';
+        bg[i].style.background = color;
+      }
+     if(color === 'aqua') slider.style.background = 'white';
+     else slider.style.background = 'aqua';
+     }
+      slider.addEventListener('click',()=>{
+        if(localStorage.getItem('bg-color') === 'white') localStorage.setItem('bg-color','aqua');
+        else localStorage.setItem('bg-color','white')
+        slider.classList.toggle('slide');
+        chooseBg(localStorage.getItem('bg-color'));
+      });
+      window.onload=()=>{
+        if(localStorage.getItem('bg-color')){
+          chooseBg(localStorage.getItem('bg-color'));
+        }else{
+          chooseBg('aqua')
+        }
+      }
+    
+    </script>
   </body>
 </html>
