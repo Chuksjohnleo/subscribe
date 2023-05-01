@@ -1,14 +1,16 @@
 # Subscribe
-This Simple Chat App is a fullstack app that am still working on.
+This Simple Chat App is a fullstack app that I am still working on.
 
 ![Preview](https://chuksjohnleo.github.io/images/chatapp.png)
+[Visit Site](https://https://subscribe-i9vr.onrender.com/)
 
 ## Starting this app
-
 To start this app on your local machine;
 Make sure that node is installed, run 
 `npm start` on you command line. The server refreshes whenever there's 
-a change in your files because am using nodemon.
+a change in your files because I am using nodemon.
+
+You can also click the bash file i.e `Subscribe.bat` to start the app.
 
 ## Features of this app
 This app have some features which includes
