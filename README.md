@@ -2,7 +2,7 @@
 This Simple Chat App is a fullstack app that I am still working on.
 
 ![Preview](https://chuksjohnleo.github.io/images/chatapp.png)
-[Visit Site](https://https://subscribe-i9vr.onrender.com/)
+[Visit Site](https://subscribe-i9vr.onrender.com/)
 
 ## Starting this app
 To start this app on your local machine;
